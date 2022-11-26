@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:background="#ffffff"
+    android:layout_height="600dp">
+
+    <TextView
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:textSize="20sp"
+        android:text="Add Device"
+        android:textAlignment="center"
+        android:id="@+id/title_custom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </TextView>
+    <LinearLayout
+        android:layout_margin="13dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <EditText
+            android:id="@+id/edt_id_device"
+            android:padding="10dp"
+            android:hint="Topic MQTT"
+            android:background="@drawable/custom_inputtext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/edt_name_device"
+            android:padding="10dp"
+            android:hint="Name Device"
+            android:background="@drawable/custom_inputtext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/edt_type_device"
+            android:padding="10dp"
+            android:hint="Type Device"
+            android:inputType="number"
+            android:background="@drawable/custom_inputtext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+        <TextView
+            android:textSize="13dp"
+            android:text="Example type device is number: 0: sensor, 1: control, 2: other"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </TextView>
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/edt_img_device"
+            android:padding="10dp"
+            android:hint="Link image "
+            android:background="@drawable/custom_inputtext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+        <ImageView
+            android:id="@+id/img_device"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+        </ImageView>
+        <Button
+            android:id="@+id/btn_add_device"
+            android:text="Add Device"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custom_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </Button>
+    </LinearLayout>
+
+</LinearLayout>

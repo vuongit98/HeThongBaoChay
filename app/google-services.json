@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1024151749656",
+    "firebase_url": "https://datnbaochay-default-rtdb.firebaseio.com",
+    "project_id": "datnbaochay",
+    "storage_bucket": "datnbaochay.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1024151749656:android:1778d46f3b7f6198ddef6d",
+        "android_client_info": {
+          "package_name": "com.anonymous.he_thong_canh_bao_chay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1024151749656-s1qdehgnhjf0urei6albdg6oaakp451u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3dB3sOnwtffPbA6POFWbkxVDnTQiFKQc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1024151749656-s1qdehgnhjf0urei6albdg6oaakp451u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

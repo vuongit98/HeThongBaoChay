@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:padding="10dp"
+    android:background="#ffffff"
+    android:layout_height="170dp">
+    <TextView
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:text="Bạn có muốn đăng xuất tài khoản ?"
+        android:id="@+id/txt_title_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </TextView>
+    <RelativeLayout
+
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button"
+            android:text="YES"
+            android:textAlignment="center"
+            android:textSize="25sp">
+
+        </Button>
+        <Button
+            android:id="@+id/btn_no"
+            android:textSize="25sp"
+            android:textAlignment="center"
+            android:text="NO"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/custom_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </Button>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="15dp"
+    android:background="@drawable/background_custom"
+    android:layout_height="200dp">
+
+    <TextView
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:textSize="20sp"
+        android:text="Notification Remove Device"
+        android:textAlignment="center"
+        android:id="@+id/title_custom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </TextView>
+    <LinearLayout
+        android:layout_margin="13dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/notification_title"
+            android:textSize="20sp"
+            android:padding="10dp"
+            android:text="Bạn có muốn xoá thiết bị hay không ?"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </TextView>
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_yes"
+                android:text="Yes"></Button>
+
+            <Button
+                android:id="@+id/btn_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_no"
+                android:text="No"></Button>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>
