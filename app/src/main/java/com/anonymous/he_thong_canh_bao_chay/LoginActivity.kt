@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.Toast
 import com.anonymous.he_thong_canh_bao_chay.Helper.CustomLoading
 import com.anonymous.he_thong_canh_bao_chay.Models.User
 import com.anonymous.he_thong_canh_bao_chay.databinding.ActivityLoginBinding
@@ -41,13 +42,20 @@ class LoginActivity : AppCompatActivity() {
         loading.showDialog()
         FirebaseAuth.getInstance().signInWithEmailAndPassword(user.email !!,user.password !!)
             .addOnCompleteListener{
+                Toast.makeText(this,"Successful to login",Toast.LENGTH_SHORT).show()
                 if (it.isSuccessful) {
                     loading.dimiss()
                     startActivity(Intent(this@LoginActivity, ConnectMQTTActivity::class.java))
                     finish()
                 }else {
+
+                    Toast.makeText(this,"Not successful to login ",Toast.LENGTH_SHORT).show()
                     loading.dimiss()
                 }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this,"Failure to login",Toast.LENGTH_SHORT).show()
+                loading.dimiss()
             }
     }
 }

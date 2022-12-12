@@ -114,7 +114,7 @@ class HistoryFragment : Fragment() {
                         loadingHistory.showDialog()
                    // TotalHistoryDevicePresenter().
                    // getListHistoryDevice(uid,mRoomChoose!!.idRoom!!,mDevice!!.idDevice !!,mListDeviceHistory,mListEntry)
-                    getListDataFromDate(this.idDevice.toString(), newItem);
+                    getListDataFromDate(this.idDevice.toString(), newItem,loadingHistory);
                     Handler(Looper.getMainLooper()).postDelayed({
                         if (loadingHistory.isShowing()) loadingHistory.dimiss()
                         drawLineChart(mMin,mMax,lineChart,System.currentTimeMillis(), mListEntry)
@@ -126,7 +126,7 @@ class HistoryFragment : Fragment() {
         }
         return binding.root
     }
-    fun getListDataFromDate(idDevice: String, date : String) {
+    fun getListDataFromDate(idDevice: String, date : String ,loadingHistory: CustomLoading) {
         var urlTree = "History/"+ MQTTHelper.uid +"/"+idDevice+"/"+date
         Log.d( "getListHistoryDevice: ",urlTree)
         FirebaseDatabase.getInstance()
@@ -147,7 +147,7 @@ class HistoryFragment : Fragment() {
                                 mListDeviceHistory.add(this)
                             }
                         }
-                        process(date)
+                        process(date,loadingHistory)
                     }
                 }
 
@@ -208,31 +208,38 @@ class HistoryFragment : Fragment() {
 
             })
     }
-    fun process(day : String) {
+    fun process(day : String , loadingHistory: CustomLoading) {
         val tmp = day.split("_")
         Log.d("TIMESTAMP : " ,tmp.toString())
         var timeStartDate: Long =
-            ConvertTime.convertDateTimeToUnix(tmp[2].toInt(), tmp[1].toInt() - 1, tmp[0].toInt(), 0, 0, 0)
-
+            ConvertTime.convertDateTimeToUnix(tmp[0].toInt(), tmp[1].toInt() - 1, tmp[2].toInt(), 0, 0, 0)
         Log.d("TIME_START", "${timeStartDate} ")
         timeStartDate = timeStartDate/1000
         val listTurn: MutableList<Float> = ArrayList()
-        for (i in 0..1000000) listTurn.add(0f)
+        val listTime : MutableList<Int>  = ArrayList()
+        for (i in 0..1000000)  {
+            listTurn.add(0f)
+            listTime.add(0)
+        }
         for (item in mListDeviceHistory) {
-            val currentTimeStamp = item.time!!.toLong()/1000
+            val currentTimeStamp = item.time!!.toLong()
 //            val currentTimeOn: Int = item.getTimeOn()
 //            for (i in 0 until currentTimeOn) {
-                val index = Math.abs(currentTimeStamp - timeStartDate)
-                Log.d("CHART", "$currentTimeStamp-$timeStartDate = $index")
-                if (index.toInt() < 0 || index.toInt() >=1000000 ) break
-                listTurn.add(index.toInt(), item.valueDevice!!.toFloat())
+                var index = Math.abs(currentTimeStamp - timeStartDate)
+                for(i in 0..5) {
+                    index = index + i
+                    Log.d("CHART", "$currentTimeStamp-$timeStartDate = $index")
+                    if (index.toInt() < 0 || index.toInt() >=1000000 ) break
+                    listTurn.add(index.toInt(), item.valueDevice!!.toFloat())
+                }
         }
-        for (i in 0 .. 1000000) {
+        for (i in 0 .. 86400) {
             mListEntry.add(Entry(i.toFloat(), listTurn[i]))
         }
+        if(loadingHistory.isShowing()) loadingHistory.dimiss()
 
     }
-    fun drawLineChart(min: Float , max : Float ,lineChart : LineChart, timeStamp : Long, mListData : MutableList<Entry>) {
+    fun drawLineChart(min: Float , max : Float ,lineChart : LineChart, timeStamp : Long, mListData : MutableList<Entry> ) {
         // Month start 0 - 11
         Log.d( "drawLineChart: ", "VAO")
         // Left Axis
@@ -252,7 +259,7 @@ class HistoryFragment : Fragment() {
         // Right Axis
         //
         lineChart.getAxisRight().setEnabled(false)
-
+        lineChart.zoomIn()
         // X Axis test
         val xAxis: XAxis = lineChart.getXAxis()
         xAxis.position = XAxis.XAxisPosition.BOTTOM
@@ -286,9 +293,12 @@ class HistoryFragment : Fragment() {
     internal class XValueFormatter : ValueFormatter() {
         override fun getAxisLabel(value: Float, axis: AxisBase): String {
             val stamp = value.toInt() / 3600
-            return if (value.toInt() % 3600 == 0) {
-                "$stamp:00"
-            } else ""
+             if (value.toInt() % 3600 == 0) {
+                 return "$stamp:00"
+            } else {
+                 var tmp = value.toInt()%3600
+                 return "$stamp:$tmp"
+            }
         }
     }
     companion object {
