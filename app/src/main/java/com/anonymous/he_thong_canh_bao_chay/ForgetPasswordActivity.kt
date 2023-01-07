@@ -1,7 +1,9 @@
 package com.anonymous.he_thong_canh_bao_chay
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.widget.Toast
@@ -18,7 +20,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
         loading = CustomLoading(this)
         setContentView(viewBinding.root)
         viewBinding.btnResendMail.setOnClickListener {
-            var strEmail = viewBinding.edtPasswordRetry.toString().trim()
+            var strEmail = viewBinding.edtPasswordRetry.text.toString().trim()
             if (Patterns.EMAIL_ADDRESS.matcher(strEmail).matches()) {
                 sendMail(email = strEmail , loading = loading)
             }else {
@@ -28,14 +30,18 @@ class ForgetPasswordActivity : AppCompatActivity() {
     }
     fun sendMail(email : String, loading: CustomLoading) {
         loading.showDialog()
-        FirebaseAuth.getInstance().sendPasswordResetEmail(email.toString()).apply {
-            if (this.isSuccessful) {
-//                forgetPass.sendMailSuccess() ;
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email.toString()).addOnCompleteListener() {
+            if (it.isSuccessful) {
+                Toast.makeText(this,"Đã gửi về mail ${email} thành công" ,Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this@ForgetPasswordActivity, LoginActivity::class.java))
                 loading.dimiss()
-            }else
-            {
-                loading.dimiss()
+                viewBinding.edtPasswordRetry.setText("");
+                finish()
             }
+        }.addOnFailureListener {
+            Toast.makeText(this,"Lỗi: ${it.message.toString()}" ,Toast.LENGTH_SHORT).show()
+            Log.d("EMAIL: ", "${it.message.toString()}")
+            loading.dimiss()
         }
     }
 }

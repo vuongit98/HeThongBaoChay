@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.Toast
 import com.anonymous.he_thong_canh_bao_chay.Helper.CustomLoading
 import com.anonymous.he_thong_canh_bao_chay.Models.User
 import com.anonymous.he_thong_canh_bao_chay.databinding.ActivitySignUpBinding
@@ -42,30 +43,36 @@ class SignUpActivity : AppCompatActivity() {
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     if(loading.isShowing() == false) loading.showDialog()
-                    FirebaseAuth.getInstance().currentUser!!.sendEmailVerification()
-                        .addOnCompleteListener {
                             it?.apply {
                                 FirebaseAuth.getInstance().currentUser.let {
                                     it?.apply {
                                         user.idUser = it.uid
                                         var firebaseRef = FirebaseDatabase.getInstance()
-                                        var db = firebaseRef.getReference("Users/"+it.uid)
+                                        firebaseRef.getReference("Users/" + it.uid)
                                             .setValue(user).addOnCompleteListener {
-                                                if (it.isSuccessful){
+                                                if (it.isSuccessful) {
                                                     loading.dimiss()
-                                                    startActivity(Intent(this@SignUpActivity, ConnectMQTTActivity::class.java))
-
+                                                    startActivity(
+                                                        Intent(
+                                                            this@SignUpActivity,
+                                                            ConnectMQTTActivity::class.java
+                                                        )
+                                                    )
                                                     finish()
-                                                }else{
+                                                } else {
                                                     loading.dimiss()
                                                 }
+                                            }
+                                            .addOnFailureListener {
+                                                Toast.makeText(this@SignUpActivity,"Lỗi : $${it.message}", Toast.LENGTH_SHORT).show()
                                             }
                                     }
                                 }
 
                             }
-                        }
                 }
+            }.addOnFailureListener {
+                Toast.makeText(this,"Lỗi : ${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }
